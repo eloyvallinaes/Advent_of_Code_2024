@@ -22,15 +22,13 @@ def part1(instructions):
 
 
 assert part1(example) == 161
-print(f'Part 1: {part1(open('inputs/day_03.txt', 'r').read())}')
+print(f'Part 1: {part1(actual)}')
 
 
 def part2(instructions):
     instructions = 'do()' + instructions + "don't()"
     dos = [m.end() for m in re.finditer(r"do\(\)", instructions)]
     donts = [m.start() for m in re.finditer(r"don't\(\)", instructions)]
-    print(dos)
-    print(donts)
     result = 0
     start = 0
     end = 0
@@ -39,7 +37,6 @@ def part2(instructions):
             start = [s for s in dos if s > end][0]
             end = [e for e in donts if e > start][0]
             chunk = instructions[start:end]
-            print(start, end)
             result += part1(chunk)
         except IndexError:
             return result
