@@ -4,7 +4,7 @@ Read corrupted instructions fitting the pattern mul(X, Y).
 Add up the result of all valid multiplications.
 
 Part 2:
-Reports are safe if removing one element makes them safe.
+Consider valid patterns only, preceded by do() and not don't()
 """
 
 import re
