@@ -44,16 +44,16 @@ def part1(data):
         ii, jj = np.where(map == kind)
         antenna = [(int(i), int(j)) for i, j in zip(ii, jj)]
         for a, b in permutations(antenna, 2):
-            iback = a[0] - (b[0] - a[0])
-            jup = a[1] - (b[1] - a[1])
-            iforth = b[0] + (b[0] - a[0])
-            jdown = b[1] + (b[1]- a[1])
-            if 0 <= iback < MAPWIDTH and 0 <= jup < MAPHEIGHT:
+            iup = a[0] - (b[0] - a[0])
+            jback = a[1] - (b[1] - a[1])
+            idown = b[0] + (b[0] - a[0])
+            jforth = b[1] + (b[1]- a[1])
+            if 0 <= iup < MAPHEIGHT and 0 <= jback < MAPWIDTH:
                 # antinode in map
-                antinodes.append((iback, jup))
+                antinodes.append((iup, jback))
             
-            if 0 <= iforth < MAPWIDTH and 0 <= jdown < MAPHEIGHT: 
-                antinodes.append((iforth, jdown))
+            if 0 <= idown < MAPHEIGHT and 0 <= jforth < MAPWIDTH: 
+                antinodes.append((idown, jforth))
 
     return set(antinodes)
         
