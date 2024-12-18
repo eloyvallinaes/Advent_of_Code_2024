@@ -15,44 +15,34 @@ import numpy as np
 example = 'inputs/ex_11.txt'
 actual = 'inputs/day_11.txt'
 
-
-def blink(stone, memo=None):
-    if memo is None:
-        memo = {
-            "0": ["1"],
-        }
-
-    if stone in memo:
-        return memo[stone]
-
-    if len(stone) % 2 == 0:
-        head = stone[:len(stone)//2]
-        tail = stone[len(stone)//2:]
-        memo.update({
-            stone: [
-                str(int(head)),
-                str(int(tail)),
-            ]
-        })
+memo = {}
+def f(stone: str, remaining: int):
+    key = ','.join([stone, str(remaining)])
+    if key in memo:
+        return memo[key]
+    
+    if remaining == 0:
+        result = 1
+    
+    elif str(int(stone)) == "0":
+        result = f("1", remaining-1)
+    
+    elif len(stone) % 2 == 0:
+        head = str(int(stone[:len(stone)//2]))
+        tail = str(int(stone[len(stone)//2:]))
+        result = f(head, remaining-1) + f(tail, remaining-1)
+    
     else:
-        memo.update({stone: [str(int(stone)*2024)]})
+        result = f(str(int(stone)*2024), remaining-1)
 
-    return memo[stone]
+    memo[key] = result
 
+    return result
 
-def part1(stones, n, memo=None):
-    if memo is None:
-        memo = {"0": "1"}
-    for i in range(n):
-        newline = []
-        for stone in stones:
-            new = blink(stone, memo)
-            newline += new if type(new) == list else [new]
-        stones = newline
-        # print(f"{i+1}:", stones)
+stones = ["125",  "17"]
+stones = "2 77706 5847 9258441 0 741 883933 12".split()
+ss = 0
+for stone in stones:
+    ss += f(stone, 75)
 
-    return stones
-
-
-print(part1(["125", "17"], 6))
-                    
+print(ss)
